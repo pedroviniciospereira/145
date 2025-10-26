@@ -1,0 +1,57 @@
+{% load static %} <!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>{% block title %}Sistema EPI{% endblock %}</title>
+    
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+    <svg width="0" height="0" style="position:absolute">
+        <defs>
+            <symbol id="icon-factory" ... </symbol>
+            <symbol id="icon-dashboard" ... </symbol>
+            <symbol id="icon-users-group" ... </symbol>
+            </defs>
+    </svg>
+
+    <div class="container">
+        
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">
+                        <a href="{% url 'index' %}">
+                            <svg class="icon"><use href="#icon-dashboard"></use></svg>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="{% if request.resolver_match.url_name == 'cadastro' %}active{% endif %}">
+                        <a href="{% url 'cadastro' %}">
+                            <svg class="icon"><use href="#icon-users-group"></use></svg>
+                            <span>Colaboradores</span>
+                        </a>
+                    </li>
+                    </ul>
+            </nav>
+            <div class="sidebar-footer">
+                </div>
+        </aside>
+
+        <main class="content">
+            
+            {% block content %}
+            {% endblock %}
+
+        </main>
+    </div>
+
+    <script src="{% static 'script.js' %}"></script>
+
+</body>
+</html>

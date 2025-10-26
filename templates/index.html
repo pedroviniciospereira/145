@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - Sistema EPI{% endblock %}
+
+{% block content %}
+
+    <div class="page-header">
+        <h1>Colaboradores</h1>
+        <a href="{% url 'cadastro' %}" class="btn-submit">
+            <svg class="icon"><use href="#icon-plus-circle"></use></svg>
+            Novo Colaborador
+        </a>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h4>Total de Colaboradores</h4>
+            <span class="value">{{ total_colaboradores }}</span>
+        </div>
+        <div class="stat-card">
+            <h4>Colaboradores Ativos</h4>
+            <span class="value">{{ colaboradores_ativos }}</span>
+        </div>
+        <div class="stat-card">
+            <h4>Colaboradores Inativos</h4>
+            <span class="value">{{ colaboradores_inativos }}</span>
+        </div>
+    </div>
+
+    <div class="form-card"> 
+        <h2>Lista de Colaboradores</h2>
+        
+        <div class="search-bar">
+            <form method="GET">
+                <input type="text" name="q" placeholder="Pesquisar por nome, CPF ou função..." value="{{ search_query }}">
+            </form>
+        </div>
+
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>CPF</th>
+                        <th>Função</th>
+                        <th>Status</th>
+                        <th class="actions">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for colab in colaboradores_lista %}
+                    <tr>
+                        <td>{{ colab.nome_completo }}</td>
+                        <td>{{ colab.cpf }}</td>
+                        <td>{{ colab.funcao }}</td>
+                        <td>{{ colab.status }}</td>
+                        <td class="actions">
+                            <a href="#">Editar</a>
+                            <a href="#">Excluir</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+
+{% endblock %}
