@@ -1,11 +1,12 @@
-{% extends 'base.html' %} {% load static %}
+{% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Cadastrar Colaborador - Sistema EPI{% endblock %}
+{% block title %}{% if colaborador %}Editar{% else %}Cadastrar{% endif %} Colaborador{% endblock %}
 
 {% block content %}
 
     <div class="page-header">
-        <h1>Cadastrar Colaborador</h1>
+        <h1>{% if colaborador %}Editar{% else %}Cadastrar{% endif %} Colaborador</h1>
         <a href="{% url 'index' %}" class="btn-secondary"> <svg class="icon"><use href="#icon-arrow-left"></use></svg>
             Voltar para a lista
         </a>
@@ -14,36 +15,46 @@
     <div class="form-card">
         <div class="form-header">
             <svg class="icon-large"><use href="#icon-plus-circle"></use></svg>
-            <h2>Novo Colaborador</h2>
+            <h2>{% if colaborador %}Dados do Colaborador{% else %}Novo Colaborador{% endif %}</h2>
         </div>
         
-        <div id="alert-success">Colaborador salvo com sucesso!</div>
+        <div id="alert-success" style="display: none;">Colaborador salvo com sucesso!</div> 
 
         <form id="colaborador-form" method="POST">
-            {% csrf_token %} <div class="form-group">
+            {% csrf_token %} 
+            
+            <div class="form-group">
                 <label for="nome">Nome Completo <span class="required">*</span></label>
-                <input type="text" id="nome" name="nome_completo" placeholder="Digite o nome completo" required>
+                <input type="text" id="nome" name="nome_completo" placeholder="Digite o nome completo" 
+                       value="{{ colaborador.nome_completo|default:'' }}" required>
             </div>
 
             <div class="form-group">
                 <label for="cpf">CPF <span class="required">*</span></label>
-                <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" required maxlength="14">
+                <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" 
+                       value="{{ colaborador.cpf|default:'' }}" required maxlength="14">
             </div>
 
             <div class="form-group">
                 <label for="funcao">Função <span class="required">*</span></label>
-                <input type="text" id="funcao" name="funcao" list="lista-funcoes" placeholder="Selecione ou digite a função" required>
+                <input type="text" id="funcao" name="funcao" list="lista-funcoes" placeholder="Selecione ou digite a função" 
+                       value="{{ colaborador.funcao|default:'' }}" required>
                 <datalist id="lista-funcoes">
                     <option value="Almoxarife">
                     <option value="Pedreiro">
-                    </datalist>
+                    <option value="Eletricista">
+                    <option value="Mestre de Obras">
+                    <option value="Carpinteiro">
+                    <option value="Servente">
+                    <option value="Armador">
+                </datalist>
             </div>
 
             <div class="form-group">
                 <label for="status">Status <span class="required">*</span></label>
                 <select id="status" name="status" required>
-                    <option value="Ativo">Ativo</option>
-                    <option value="Inativo">Inativo</option>
+                    <option value="Ativo" {% if colaborador.status == 'Ativo' %}selected{% endif %}>Ativo</option>
+                    <option value="Inativo" {% if colaborador.status == 'Inativo' %}selected{% endif %}>Inativo</option>
                 </select>
             </div>
 
@@ -53,7 +64,6 @@
                     Salvar Colaborador
                 </button>
             </div>
-
         </form>
     </div>
 

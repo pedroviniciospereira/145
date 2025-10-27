@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Dashboard - Sistema EPI{% endblock %}
+{% block title %}Dashboard - Colaboradores{% endblock %}
 
 {% block content %}
 
@@ -28,13 +28,13 @@
         </div>
     </div>
 
-    <div class="form-card"> 
+    <div class="form-card">
         <h2>Lista de Colaboradores</h2>
-        
+
         <div class="search-bar">
             <form method="GET">
                 <input type="text" name="q" placeholder="Pesquisar por nome, CPF ou função..." value="{{ search_query }}">
-            </form>
+                </form>
         </div>
 
         <div class="table-container">
@@ -45,26 +45,30 @@
                         <th>CPF</th>
                         <th>Função</th>
                         <th>Status</th>
-                        <th class="actions">Ações</th>
-                    </tr>
+                        <th class="actions">Ações</th> </tr>
                 </thead>
                 <tbody>
                     {% for colab in colaboradores_lista %}
                     <tr>
                         <td>{{ colab.nome_completo }}</td>
-                        <td>{{ colab.cpf }}</td>
-                        <td>{{ colab.funcao }}</td>
+                        <td>{{ colab.cpf }}</td> <td>{{ colab.funcao }}</td>
                         <td>{{ colab.status }}</td>
                         <td class="actions">
-                            <a href="#">Editar</a>
-                            <a href="#">Excluir</a>
+                            <a href="{% url 'colaborador_editar' colab.id %}">Editar</a>
+
+                            <a href="{% url 'colaborador_excluir' colab.id %}"
+                               onclick="return confirm('Tem certeza que deseja excluir {{ colab.nome_completo|escapejs }}?');"
+                               style="color: #E53E3E;"> Excluir
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" style="padding: 16px; text-align: center; color: #718096;">
+                            Nenhum colaborador encontrado.
                         </td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
-        </div>
-        
-    </div>
-
-{% endblock %}
+        </div> </div> {% endblock %}

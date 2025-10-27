@@ -1,12 +1,18 @@
+# Em colaboradores/urls.py
 from django.urls import path
 from . import views
 
 urlpatterns = [
-    # URL para a página de lista/dashboard (Ex: http://127.0.0.1:8000/)
-    # Ela chama a view 'colaborador_lista' e tem o nome 'index'
+    # Read (Listar)
     path('', views.colaborador_lista, name='index'), 
     
-    # URL para a página de cadastro (Ex: http://127.0.0.1:8000/cadastro/)
-    # Ela chama a view 'colaborador_novo' e tem o nome 'cadastro'
+    # Create (Cadastrar)
     path('cadastro/', views.colaborador_novo, name='cadastro'),
+    
+
+    # <int:id> pega o número do colaborador da URL
+    path('editar/<int:id>/', views.colaborador_editar, name='colaborador_editar'),
+    
+    # Delete (Excluir) - NOVA LINHA
+    path('excluir/<int:id>/', views.colaborador_excluir, name='colaborador_excluir'),
 ]
