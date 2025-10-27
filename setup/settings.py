@@ -26,6 +26,8 @@ SECRET_KEY = "django-insecure-6$c45$1+7!hs$a(sqw3(m12h%e^jlzy3_=()yx$@o7kn#7sf3p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# MODIFICADO: Lista de hosts/domínios permitidos.
+# '*' permite qualquer host (necessário para o Codespace funcionar, inseguro para produção).
 ALLOWED_HOSTS = ['*']
 
 
@@ -38,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # ADICIONADO: Registra o aplicativo 'colaboradores' no projeto Django.
     'colaboradores',
 ]
 
@@ -53,9 +56,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "setup.urls"
 
+# Configuração dos Templates
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
+        # MODIFICADO: Diz ao Django para procurar templates na pasta 'templates' na raiz do projeto.
         "DIRS": [os.path.join(BASE_DIR, 'templates')],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -74,6 +79,8 @@ WSGI_APPLICATION = "setup.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# MODIFICADO: Configurado para usar SQLite (arquivo db.sqlite3).
+# Alterado do MySQL padrão do Codespace para SQLite para simplificar o desenvolvimento.
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -116,8 +123,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
+# URL base para arquivos estáticos (ex: /static/style.css)
 STATIC_URL = "static/"
 
+# ADICIONADO: Diz ao Django para procurar arquivos estáticos na pasta 'static' na raiz do projeto.
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
@@ -127,7 +136,9 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# ADICIONADO: Lista de origens confiáveis para requisições POST (evita erro CSRF 403).
+# Necessário para o Codespace, pois o acesso não vem de 'localhost' puro.
 CSRF_TRUSTED_ORIGINS = [
-    'https://localhost:8000',
-    'https://shadowy-broomstick-97w7w566499j2757x.github.dev'
+    'https://localhost:8000', # Adicionado por causa do erro no log
+    'https://shadowy-broomstick-97w7w566499j2757x.github.dev' # Sua URL específica do Codespace
 ]

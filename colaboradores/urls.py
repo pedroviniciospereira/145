@@ -1,4 +1,3 @@
-# Em colaboradores/urls.py
 from django.urls import path
 from . import views
 
@@ -8,7 +7,6 @@ urlpatterns = [
     
     # Create (Cadastrar)
     path('cadastro/', views.colaborador_novo, name='cadastro'),
-    
 
     # <int:id> pega o número do colaborador da URL
     path('editar/<int:id>/', views.colaborador_editar, name='colaborador_editar'),
